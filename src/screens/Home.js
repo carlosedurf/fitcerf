@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import {connect} from 'react-redux';
 
@@ -30,11 +30,34 @@ const LegendBox = styled.View`
 `;
 
 const Page = props => {
+  let today = new Date();
+
+  const [selectedMonth, setSelectedMonth] = useState(today.getMonth());
+  const [selectedDay, setSelectedDay] = useState(today.getDate());
+
   return (
     <Container>
-      <HomeMonthScroll />
-      <HomeDaysScroll />
-      <HomeDaysStatus />
+      <HomeMonthScroll
+        selectedMonth={selectedMonth}
+        setSelectedMonth={setSelectedMonth}
+      />
+      <HomeDaysScroll
+        selectedMonth={selectedMonth}
+        selectedDay={selectedDay}
+        setSelectedDay={setSelectedDay}
+        dailyProgress={props.dailyProgress}
+        workoutDays={props.workoutDays}
+      />
+      <HomeDaysStatus
+        selectedMonth={selectedMonth}
+        selectedDay={selectedDay}
+        setSelectedDay={setSelectedDay}
+        dailyProgress={props.dailyProgress}
+        workoutDays={props.workoutDays}
+        addProgress={props.addProgress}
+        delProgress={props.delProgress}
+        getToWorkout={() => props.navigation.navigate('WorkoutStack')}
+      />
 
       <Legend>
         <LegendText>Legenda: </LegendText>
@@ -103,11 +126,17 @@ Page.navigationOptions = ({navigation}) => {
 };
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    dailyProgress: state.userReducer.daylyProgress,
+    workoutDays: state.userReducer.workoutDays,
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    addProgress: date => dispatch({type: 'ADD_PROGRESS', payload: {date}}),
+    delProgress: date => dispatch({type: 'DEL_PROGRESS', payload: {date}}),
+  };
 };
 
 export default connect(

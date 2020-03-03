@@ -102,11 +102,10 @@ export default props => {
       endToday.setMinutes(59);
       endToday.setSeconds(59);
       endToday = endToday.getTime();
-
       let diff = endToday - now;
 
       let h = Math.floor(diff / (1000 * 60 * 60));
-      let m = Math.floor(diff / (1000 * 100) - h * 60);
+      let m = Math.floor(diff / (1000 * 60) - h * 60);
       let s = Math.floor(diff / 1000 - m * 60 - h * 60 * 60);
 
       h = h < 10 ? '0' + h : h;

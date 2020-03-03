@@ -110,7 +110,7 @@ Page.navigationOptions = ({navigation}) => {
     };
 
     return (
-      <ConfigButtonArea onPress={btnAction}>
+      <ConfigButtonArea onPress={btnAction} underlayColor="transparent">
         <ConfigButtonImage source={require('../assets/config.png')} />
       </ConfigButtonArea>
     );

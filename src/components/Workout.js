@@ -72,6 +72,14 @@ export default props => {
     props.addAction();
   };
 
+  const editWorkout = () => {
+    props.editAction();
+  };
+
+  const delWorkout = () => {
+    props.delAction();
+  };
+
   return (
     <Workout>
       <WorkoutInfo>
@@ -86,15 +94,35 @@ export default props => {
       </WorkoutInfo>
 
       <WorkoutActions>
-        <WorkoutButton onPress={() => addWorkout()} underlayColor="transparent">
-          <WorkoutButtonImage
-            source={
-              included
-                ? require('../assets/check-black.png')
-                : require('../assets/add.png')
-            }
-          />
-        </WorkoutButton>
+        {props.addAction && (
+          <WorkoutButton
+            onPress={() => addWorkout()}
+            underlayColor="transparent">
+            <WorkoutButtonImage
+              source={
+                included
+                  ? require('../assets/check-black.png')
+                  : require('../assets/add.png')
+              }
+            />
+          </WorkoutButton>
+        )}
+
+        {props.editAction && (
+          <WorkoutButton
+            onPress={() => editWorkout()}
+            underlayColor="transparent">
+            <WorkoutButtonImage source={require('../assets/edit-black.png')} />
+          </WorkoutButton>
+        )}
+
+        {props.delAction && (
+          <WorkoutButton
+            onPress={() => delWorkout()}
+            underlayColor="transparent">
+            <WorkoutButtonImage source={require('../assets/trash-black.png')} />
+          </WorkoutButton>
+        )}
       </WorkoutActions>
     </Workout>
   );
